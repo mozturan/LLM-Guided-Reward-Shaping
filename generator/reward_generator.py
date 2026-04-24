@@ -2,8 +2,9 @@ from .llm import client
 
 def generate_reward_function(goal_description: str,
                              environment_description: str,
-                             previous_attempt: str,
-                             previous_result: str):
+                             previous_attempt,
+                             previous_result,
+                             relevant_history):
     
 
     system_prompt = """ 
@@ -32,3 +33,20 @@ def generate_reward_function(goal_description: str,
         },
         contents=[user_prompt]
     )
+
+def should_stop(metrics, goal):
+    """Let the LLM decide if the goal is achieved."""
+
+    user_prompt = f"""
+            Goal: {goal}
+            Current metrics: {metrics}
+            Has the goal been sufficiently achieved? 
+            Answer only YES or NO.
+            """
+    
+    response = client.models.generate_content(
+        model="gemini-3.1-flash-lite-preview",
+        contents=[user_prompt] 
+    )
+
+    return True if response == "YES" else False
