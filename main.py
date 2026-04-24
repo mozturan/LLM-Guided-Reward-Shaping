@@ -59,3 +59,6 @@ def run_reward_design_agent(goal:str,
     print(f"Best reward function:\n{best_reward_code}")
     return best_reward_code, best_result
 
+#TODO1: Integrate RL agent to run task
+#TODO2: Check retrived data in prompt
+#TODO3: Integrare donkeycar
