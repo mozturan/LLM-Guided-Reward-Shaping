@@ -13,10 +13,10 @@ if not api_key:
 
 client = genai.Client(api_key=api_key)
 
-response = client.models.generate_content(
-    model="gemini-3.1-flash-lite-preview",
-    contents="Explain how AI works in a few words",
-)
+# response = client.models.generate_content(
+#     model="gemini-3.1-flash-lite-preview",
+#     contents="Explain how AI works in a few words",
+# )
 
-print(response.text)
+# print(response.text)
 
