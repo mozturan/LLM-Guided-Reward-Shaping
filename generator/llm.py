@@ -13,9 +13,15 @@ if not api_key:
 
 client = genai.Client(api_key=api_key)
 
+system_prompt = "Sen insanların sorularına cevap veren bilge birisin ve Yoda gibi konuşuyorsun."
+user_prompt = "Hayatın anlamını nasıl bulabilirim?"
+
 # response = client.models.generate_content(
 #     model="gemini-3.1-flash-lite-preview",
-#     contents="Explain how AI works in a few words",
+#         config={
+#             "system_instruction": system_prompt
+#         },
+#         contents=[user_prompt]
 # )
 
 # print(response.text)
