@@ -58,23 +58,6 @@ def generate_reward_function(goal_description: str,
 
     return response
 
-def should_stop(metrics, goal):
-    """Let the LLM decide if the goal is achieved."""
-
-    user_prompt = f"""
-            Goal: {goal}
-            Current metrics: {metrics}
-            Has the goal been sufficiently achieved? 
-            Answer only YES or NO.
-            """
-    
-    response = client.models.generate_content(
-        model="gemini-3.1-flash-lite-preview",
-        contents=[user_prompt] 
-    )
-
-    return True if response == "YES" else False
-
 def summarize_approach(reward_code:str):
 
     prompt = f"""Summarize what approach this reward function uses in ONE short sentence.
