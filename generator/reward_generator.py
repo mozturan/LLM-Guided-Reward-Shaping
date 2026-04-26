@@ -56,9 +56,11 @@ def generate_reward_function(goal_description: str,
         contents=[user_prompt]
     )
 
-    return response
+    text = response.text
 
-def summarize_approach(reward_code:str):
+    return str(text)
+
+def summarize_approach(reward_code:str) -> str:
 
     prompt = f"""Summarize what approach this reward function uses in ONE short sentence.
     Focus on the key components and weighting strategy, not implementation details.
@@ -75,4 +77,4 @@ def summarize_approach(reward_code:str):
         contents=[prompt]
     )
 
-    return response
+    return str(response.text)
