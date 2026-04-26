@@ -22,8 +22,8 @@ def run_reward_design_agent(goal:str,
             all_previous_attempts=retrieve_relevant_attempts(goal)
         )
 
-        # Summarize the approach
-        approach_summary = summarize_approach(reward_code, backend=backend)
+        # Summarize the approach: I might move summarization to the reward generator in the future
+        approach_summary = summarize_approach(reward_code)
         print(f"Approach: {approach_summary}")
 
 

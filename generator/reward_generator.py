@@ -3,7 +3,7 @@ from .llm import client
 def generate_reward_function(goal_description: str,
                              environment_description: str,
                              all_previous_attempts: list | None = None, # list of {"approach": ..., "mean_reward": ..., "behavioral_description": ...}
-                             ):
+                             ) -> str:
     
 
     # Set System Prompt
