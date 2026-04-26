@@ -2,10 +2,7 @@ from .llm import client
 
 def generate_reward_function(goal_description: str,
                              environment_description: str,
-                             best_attempt: dict | None = None, # {"code": ..., "mean_reward": 123.4, "approach": ...}
-                             last_attempt: dict | None = None, # {"code": ..., "mean_reward": 123.4, "approach": ...}
-                             all_previous_attempts: list | None = None, # list of {"approach": ..., "mean_reward": ...}
-                             relevant_history: list | None = None # retrieved from ChromaDB
+                             all_previous_attempts: list | None = None, # list of {"approach": ..., "mean_reward": ..., "behavioral_description": ...}
                              ):
     
 
@@ -31,39 +28,9 @@ def generate_reward_function(goal_description: str,
     # All previous approaches — compact summaries to prevent repetition
     if all_previous_attempts:
         user_prompt+= "\nAll approaches tried so far: \n"
-        for i, attempt in enumerate(all_previous_attempts):
-            user_prompt += f"Iteration {i+1}: mean_reward = {attempt['mean_reward']} | approach = {attempt['approach']} \n"        
-        user_prompt += "\nDo not repeat the same approaches. Use the information about what was tried and what worked to generate a new, different approach. Be creative and try something meaningfully different from past attempts.\n"
-        
-    # Pass Relevant History
-    if relevant_history:
-        user_prompt += f"""
-        Relevant past reward function attempts and results retrieved from memory:):"""
-        for item in relevant_history:
-            user_prompt += f"{item}\n\n"
+        for item in enumerate(all_previous_attempts):
+            user_prompt += f"{item}\n"               
 
-    ## ! We need to get this part together
-    # Pass Best Attempt
-    if best_attempt:
-        user_prompt += f"""
-        Current best attempt: {best_attempt['code']}
-        Training results of best attempt: {best_attempt['mean_reward']}
-        Approach used in best attempt: {best_attempt['approach']}
-        Weaknesses of best attempt: {best_attempt['behavioral_description']}
-    """
-
-    # Pass Last Attempt
-    if last_attempt and last_attempt != best_attempt:
-        user_prompt += f"""
-        Most recent attempt: {last_attempt['code']}
-        Training results of most recent attempt: {last_attempt['mean_reward']}
-        Approach used in most recent attempt: {last_attempt['approach']}
-        Weaknesses of most recent attempt: {last_attempt['behavioral_description']}
-    """
-    ## ! TO this point    
-
-    # Core instruction
-    if best_attempt or last_attempt:
         user_prompt += """
             TASK:
             Generate an IMPROVED reward function that:
